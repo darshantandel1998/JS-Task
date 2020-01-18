@@ -17,17 +17,22 @@ form.addEventListener('submit', e => {
     else {
         const email = form.email.value;
         const password = form.password.value;
+        let flag = 0;
         if (localStorage.getItem('admin') != null) {
             const admin = JSON.parse(localStorage.getItem('admin'));
             if (admin.email == email && admin.password == password) {
                 adminLogin();
+                flag = 1;
             }
         }
         users.forEach((el, i) => {
             if (el.email == email && el.password == password) {
                 userLogin(el.id);
+                flag = 1;
             }
         });
+        if (flag == 0)
+            alert("Invalid Email or Password.");
     }
 });
 
