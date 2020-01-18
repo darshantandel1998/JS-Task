@@ -2,24 +2,28 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <title>Login</title>
-    <link rel="stylesheet" href="style.css" />
+	<meta charset="utf-8">
+	<title>Login</title>
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 </head>
 
 <body>
-    <form id="loginForm">
-        <h3>Login</h3>
-        <input type="email" name="email" placeholder="Email" required><br>
-        <input type="password" name="password" placeholder="password" required><br>
-        <input type="button" Value="Login" onclick="formHandlerLogin(this.form)"><br>
-        <div id="adminRegister">
-            or<br>
-            <input type="button" Value="Register Now" onclick="formHandlerRegister(this.form)">
-        </div>
-    </form>
+	<div class="col-4 card card-body bg-light mx-auto my-5">
+		<h5 class="card-title text-center">LOGIN</h5>
+		<form id="loginForm">
+			<input class="form-control" type="email" name="email" placeholder="Email" required autofocus><br>
+			<input class="form-control" type="password" name="password" placeholder="Password" required autofocus><br>
+			<button class="btn btn-warning btn-block text-uppercase" type="submit">Login</button>
+		</form>
+		<div id="admin-register">
+			<div class="text-center my-2">OR</div>
+			<button class="btn btn-warning btn-block text-uppercase" id="registerButton">Register Now</button>
+		</div>
+	</div>
 </body>
 
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="app.js"></script>
 <script type="text/javascript" src="login.js"></script>
 

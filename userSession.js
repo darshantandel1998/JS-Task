@@ -1,3 +1,8 @@
+const admin = JSON.parse(localStorage.getItem('admin'));
+if (localStorage.getItem('adminLogin') == "false") {
+    document.location = "Login.html";
+}
+$('#adminName').text(`Hello, ${admin.name}`);
 displayUsers();
 
 function displayUsers() {
@@ -11,12 +16,14 @@ function displayUsers() {
     });
     if (usersList != "") {
         const resultDOM = document.getElementById("usersSessionTable");
-        resultDOM.innerHTML = `<table border="1">
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Login Date Time</th>
-                                        <th>Logout Date Time</th>
-                                    </tr>
+        resultDOM.innerHTML = `<table class="mt-4 table table-bordered>
+                                    <thead class="thead-secondary">
+                                        <tr class="table-secondary">
+                                            <th>Name</th>
+                                            <th>Login Date Time</th>
+                                            <th>Logout Date Time</th>
+                                        </tr>
+                                    </thead>
                                     ${usersList}
                                 </table>`;
     }

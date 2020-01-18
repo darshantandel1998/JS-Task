@@ -4,22 +4,28 @@
 <head>
     <meta charset="utf-8">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="style.css" />
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 </head>
 
 <body>
-    <div class="vertical-menu">
-        <a href="Dashboard.html">Dashboard</a>
-        <a href="User.html">Users</a>
-        <a href="UserSession.html">Login Session</a>
-        <a href="#">Logout</a>
-    </div>
-    <div class="container">
-        <h1>Dashboard</h1>
-        <div id="result"></div>
+    <div class="row">
+        <div class="col-2 fixed-top bg-warning h-100">
+            <div id="adminName" class="text-center my-5"></div>
+            <a href="Dashboard.html" class="nav-link text-white h4">Dashboard</a>
+            <a href="User.html" class="nav-link text-white h4">Users</a>
+            <a href="UserSession.html" class="nav-link text-white h4">Users Session</a>
+            <a href="javascript:adminLogout();" class="nav-link text-white h4">Logout</a>
+        </div>
+        <main class="col offset-2 p-5">
+            <h1>Dashboard</h1>
+            <div class="d-flex text-center" id="flexBox"></div>
+            <div class="text-center" id="birthdayLine"></div>
+        </main>
     </div>
 </body>
 
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="app.js"></script>
 <script type="text/javascript" src="dashboard.js"></script>
 

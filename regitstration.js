@@ -1,4 +1,9 @@
-function formHandlerRegister(form) {
+if (localStorage.getItem('admin') != null) {
+    document.location = "Login.html";
+}
+
+form = document.getElementById('regitstrationForm');
+form.addEventListener('submit', e => {
     if (form.name.value.length == 0)
         alert("Name must be require");
     else if (!(form.name.value.match(/^([a-zA-Z ]){2,30}$/)))
@@ -22,9 +27,8 @@ function formHandlerRegister(form) {
             password: form.password.value,
             city: form.city.value,
             state: form.state.value
-        }
-        localStorage.setItem('admin', JSON.stringify(admin))
-        alert("Successfully Admin Registered")
+        };
+        localStorage.setItem('admin', JSON.stringify(admin));
         window.location = "Login.html";
     }
-}
+});

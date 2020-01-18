@@ -1,34 +1,48 @@
+const admin = JSON.parse(localStorage.getItem('admin'));
+if (localStorage.getItem('adminLogin') == "false") {
+    document.location = "Login.html";
+}
+$('#adminName').text(`Hello, ${admin.name}`);
 displayUsers();
 
 function displayUsers() {
     let usersList = "";
-    users.forEach((element, index) => {
+    users.forEach((el, i) => {
+        day = el.birthdate.substring(8, 10);
+        month = el.birthdate.substring(5, 7);
+        year = el.birthdate.substring(0, 4);
         usersList += `<tr>
-                            <td>${element.name}</td>
-                            <td>${element.email}</td>
-                            <td>${element.password}</td>
-                            <td>${element.birthdateString()}</td>
-                            <td>${element.calcAge()}</td>
-                            <td><a href="#" onclick="formHandlerEdit(${element.id})">Edit</a> &nbsp; <a href="#" onclick="formHandlerDelete(${element.id})">Delete</a></td>
+                            <td>${el.name}</td>
+                            <td>${el.email}</td>
+                            <td>${el.password}</td>
+                            <td>${day}/${month}/${year}</td>
+                            <td>${el.calcAge()}</td>
+                            <td><a href="#" onclick="formHandlerEdit(${el.id})">Edit</a></td>
+                            <td><a href="#" onclick="formHandlerDelete(${el.id})">Delete</a></td>
                         </tr>`;
     });
     if (usersList != "") {
         const resultDOM = document.getElementById("usersTable");
-        resultDOM.innerHTML = `<table border="1">
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Password</th>
-                                        <th>Birthdate</th>
-                                        <th>Age</th>
-                                        <th>Action</th>
-                                    </tr>
+        resultDOM.innerHTML = `<table class="mt-5 table table-bordered>
+                                    <thead class="thead-secondary">
+                                        <tr class="table-secondary">
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Password</th>
+                                            <th>Birthdate</th>
+                                            <th>Age</th>
+                                            <th>Action</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
                                     ${usersList}
                                 </table>`;
     }
 }
 
-function formHandlerAddUser(form) {
+const form = document.getElementById('userForm');
+form.addEventListener('submit', e => {
+    e.preventDefault();
     if (form.name.value.length == 0)
         alert("Name must be require");
     else if (!(form.name.value.match(/^([a-zA-Z ]){2,30}$/)))
@@ -37,7 +51,7 @@ function formHandlerAddUser(form) {
         alert("Enter a valid email format");
     else if (form.password.value.length < 8)
         alert("Password must be min 8 character");
-    else if (form.birthDate.value == "")
+    else if (form.birthdate.value == "")
         alert("Enter a birthdate");
     else {
         if (form.id.value == "-1") {
@@ -45,31 +59,30 @@ function formHandlerAddUser(form) {
             if (users.length != 0) {
                 idIndex = Number(users[users.length - 1].id) + 1;
             }
-            users.push(new User(idIndex, form.name.value, form.email.value, form.password.value, form.birthDate.value.slice(8, 10), form.birthDate.value.slice(5, 7), form.birthDate.value.slice(0, 4)));
-
+            users.push(new User(idIndex, form.name.value, form.email.value, form.password.value, form.birthdate.value));
         } else {
             users.forEach((el, i) => {
                 if (el.id == form.id.value) {
-                    users[i] = new User(el.id, form.name.value, form.email.value, form.password.value, form.birthDate.value.slice(8, 10), form.birthDate.value.slice(5, 7), form.birthDate.value.slice(0, 4));
+                    users[i] = new User(el.id, form.name.value, form.email.value, form.password.value, form.birthdate.value);
                 }
             });
         }
-        localStorage.setItem('users', JSON.stringify(users));
-        location.reload();
+        storeUsers();
+        window.location.reload();
     }
-}
+    return false
+}, false);
 
 function formHandlerEdit(id) {
-    document.getElementById('title').textContent = "Update Users";
-    formDOM = document.getElementById('userForm');
+    document.getElementById('formName').textContent = "Update Users";
     users.forEach((el, i) => {
         if (el.id == id) {
-            formDOM.id.value = el.id;
-            formDOM.name.value = el.name;
-            formDOM.email.value = el.email;
-            formDOM.password.value = el.password;
-            formDOM.birthDate.value = ("000" + el.birthYear).slice(-4) + "-" + ("0" + el.birthMonth).slice(-2) + "-" + ("0" + el.birthDate).slice(-2);
-            formDOM.btn.value = "Update User";
+            form.id.value = el.id;
+            form.name.value = el.name;
+            form.email.value = el.email;
+            form.password.value = el.password;
+            form.birthdate.value = el.birthdate;
+            form.btn.textContent = "Update User";
         }
     });
 }
@@ -78,8 +91,8 @@ function formHandlerDelete(id) {
     users.forEach((el, i) => {
         if (el.id == id) {
             users.splice(i, 1);
-            localStorage.setItem('users', JSON.stringify(users));
-            location.reload();
+            storeUsers();
+            window.location.reload();
         }
     });
 }
